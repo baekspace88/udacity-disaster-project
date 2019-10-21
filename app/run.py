@@ -77,7 +77,7 @@ def index():
             ],
 
             'layout': {
-                'title': 'Distribution of Disaster Top 10',
+                'title': 'Distribution of Top 10 Disasters',
                 'yaxis': {
                     'title': "Count"
                 },
