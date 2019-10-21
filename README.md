@@ -8,27 +8,7 @@ The application that receives a message and matches what kind of disaster it is
 It's a good project to apply my data engineering and programming skills to analyzes disaster data from Figure Eight to build a model for an API that classifies disaster messages.
 
 
-#### 3. File structure of the project
-- app
-| - template
-| |- master.html  # main page of web app
-| |- go.html  # classification result page of web app
-|- run.py  # Flask file that runs app
-
-- data
-|- disaster_categories.csv  # data to process
-|- disaster_messages.csv  # data to process
-|- process_data.py
-|- DisasterResponse.db   # database to save clean data to
-
-- models
-|- train_classifier.py
-|- classifier.pkl  # saved model
-
-- README.md
-
-
-#### 4. File Descriptions
+#### 3. File Descriptions
 - app directory
   - templates directory : This directory includes html files for layout of the web page
   - run.py : This python file executes flask web app
@@ -51,7 +31,7 @@ It's a good project to apply my data engineering and programming skills to analy
      - Exports the final model as a pickle file
 
 
-#### 5. How to execute this project
+#### 4. How to execute this project
   1. Execute 2 python files (process_data.py, train_classifier.py) in terminal by typing two each lines as below:
     - python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
     - python train_classifier.py ../data/DisasterResponse.db classifier.pkl
@@ -61,9 +41,9 @@ It's a good project to apply my data engineering and programming skills to analy
     - In a new web browser window, type in the following: https://view6914b2f4-3001.udacity-student-workspaces.com
 
 
-#### 6. How to Interact with this project
+#### 5. How to Interact with this project
 If something to want to fix, you can be a contributor of this project
 
 
-#### 7. Creator
+#### 6. Creator
 Baekspace
