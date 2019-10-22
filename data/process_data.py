@@ -3,6 +3,7 @@ import pandas as pd
 import sqlite3
 from sqlalchemy import create_engine
 
+
 def load_data(messages_filepath, categories_filepath):
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
@@ -11,6 +12,7 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    # split categories
     categories = df['categories'].str.split(";", expand=True)
     row = categories.iloc[0].values
     category_colnames = [x[:-2] for x in row]
@@ -32,14 +34,16 @@ def main():
     if len(sys.argv) == 4:
 
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
-
+        # load data
         print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
               .format(messages_filepath, categories_filepath))
         df = load_data(messages_filepath, categories_filepath)
 
+        # clean data
         print('Cleaning data...')
         df = clean_data(df)
-        
+
+        # save data
         print('Saving data...\n    DATABASE: {}'.format(database_filepath))
         save_data(df, database_filepath)
         

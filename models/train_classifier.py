@@ -32,6 +32,7 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    # delete url in text
     url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
     detected_urls = re.findall(url_regex, text)
     for url in detected_urls:
@@ -46,11 +47,13 @@ def tokenize(text):
 
 
 def build_model():
+    # build pipeline
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(RandomForestClassifier()))
     ])
+    # build grid search model
     parameters = {
         'vect__ngram_range': ((1, 1), (1, 2)),
         'tfidf__use_idf': (True, False)
@@ -73,19 +76,25 @@ def save_model(model, model_filepath):
 def main():
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
+        # load data
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
+        # split data to train and test sets
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-        
+
+        # build model
         print('Building model...')
         model = build_model()
-        
+
+        # train model
         print('Training model...')
         model.fit(X_train, Y_train)
-        
+
+        # evaluate model
         print('Evaluating model...')
         evaluate_model(model, X_test, Y_test, category_names)
 
+        # save model
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         save_model(model, model_filepath)
 
