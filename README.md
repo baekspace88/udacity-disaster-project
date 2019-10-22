@@ -33,9 +33,12 @@ It's a good project to apply my data engineering and programming skills to analy
 
 #### 4. How to execute this project
   1. Execute 2 python files (process_data.py, train_classifier.py) in terminal by typing two each lines as below:
+  
     - python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
     - python train_classifier.py ../data/DisasterResponse.db classifier.pkl
+    
   2. In order to run the web app,
+  
     - Open a new terminal window. You should already be in the workspace folder, but if not, then use terminal commands to navigate inside the folder with the run.py file
     - Type in the command line: python run.py
     - In a new web browser window, type in the following: https://view6914b2f4-3001.udacity-student-workspaces.com
