@@ -22,6 +22,15 @@ nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 
 
 def load_data(database_filepath):
+    """ Returns X(array), Y(array) and category_names(list).
+    Parameters:
+        database_filepath (str): The string which is the database path to load the dataframe.
+
+    Returns:
+        X(array): The array which are x variables.
+        Y(array): The array which are y variables.
+        category_names(list): The list which contains category names.
+    """
     engine = create_engine('sqlite:///' + database_filepath)
     conn = engine.connect()
     df = pd.read_sql_query("select * from Messages;", conn).fillna(0)
@@ -32,6 +41,13 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """ Returns the tokenized text list.
+    Parameters:
+        text (str): The string which is the text to be tokenized.
+
+    Returns:
+        clean_tokens(list): The list which contains the tokenized text.
+    """
     # delete url in text
     url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
     detected_urls = re.findall(url_regex, text)
@@ -47,6 +63,12 @@ def tokenize(text):
 
 
 def build_model():
+    """ Returns the GridSearchCV model.
+    No Parameter
+
+    Returns:
+        cv(GridSearchCV object): The object which contains the pipeline.
+    """
     # build pipeline
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
@@ -63,6 +85,15 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """ Evaluate model.
+    Parameters:
+        model (object): The model to evaluate.
+        X_test (array): The array which are x test variables.
+        Y_test (array): The array which are y test variables.
+        category_names(list): The list which contains category names.
+
+    No Return
+    """
     Y_pred = model.predict(X_test)
     for i in range(len(category_names)):
         print(category_names[i] + ": ")
@@ -70,6 +101,13 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """ Save model.
+    Parameters:
+        model (object): The model to save.
+        model_filepath (str): The string which is the path to save the model.
+
+    No Return
+    """
     joblib.dump(model, model_filepath)
 
 

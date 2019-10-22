@@ -5,6 +5,14 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    """ Returns the dataframe from raw data.
+    Parameters:
+        messages_filepath (str): The string which is the raw data(messages) path.
+        categories_filepath (str): The string which is the raw data(categories) path.
+
+    Returns:
+        df(dataframe): The dataframe which loaded from raw data.
+    """
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = pd.merge(messages, categories, how='inner')
@@ -12,6 +20,13 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """ Returns the cleaned dataframe.
+    Parameters:
+        df (dataframe): The dataframe which loaded from raw data.
+
+    Returns:
+        df(dataframe): The cleaned dataframe to save.
+    """
     # split categories
     categories = df['categories'].str.split(";", expand=True)
     row = categories.iloc[0].values
@@ -26,6 +41,14 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    """ Save the cleaned dataframe.
+    Parameters:
+        df (dataframe): The cleaned dataframe to save.
+        database_filename (str): The string which is the path to save the dataframe.
+
+    No Return
+
+    """
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('Messages', engine, index=False)
 
